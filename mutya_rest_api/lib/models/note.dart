@@ -1,3 +1,9 @@
+// ignore: depend_on_referenced_packages
+import 'package:json_annotation/json_annotation.dart';
+
+part 'note.g.dart';
+
+@JsonSerializable()
 class Note {
   String noteID;
   String noteTitle;
@@ -12,15 +18,5 @@ class Note {
       required this.createDateTime,
       required this.latestEditDateTime});
 
-  factory Note.fromJson(Map<String, dynamic> item) {
-    return Note(
-      noteID: item['noteID'],
-      noteTitle: item['noteTitle'],
-      noteContent: item['noteContent'],
-      createDateTime: DateTime.parse(item['createDateTime']),
-      latestEditDateTime: item['latestEditDateTime'] != null
-          ? DateTime.parse(item['latestEditDateTime'])
-          : null,
-    );
-  }
+  factory Note.fromJson(Map<String, dynamic> item) => _$NoteFromJson(item);
 }

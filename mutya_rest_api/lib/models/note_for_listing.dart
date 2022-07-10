@@ -1,12 +1,12 @@
 class NoteForListing {
   String noteID;
   String noteTitle;
-  DateTime? createdDateTime;
+  DateTime createDateTime;
   DateTime? latestEditDateTime;
 
   NoteForListing(
-      {this.noteID = '',
-      this.noteTitle = '',
-      this.createdDateTime,
-      this.latestEditDateTime});
+      {required this.noteID,
+      required this.noteTitle,
+      required this.createDateTime,
+      required this.latestEditDateTime});
 }

@@ -1,4 +1,5 @@
 import 'package:mutya_rest_api/models/api_response.dart';
+import '../models/note.dart';
 import '../models/note_for_listing.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -29,5 +30,23 @@ class NotesService {
           error: true, errorMessage: 'An error occured');
     }).catchError((_) => APIResponse<List<NoteForListing>>(
         error: true, errorMessage: 'An error occured'));
+  }
+
+  Future<APIResponse<Note>> getNote(String noteID) {
+    return http
+        .get(Uri.parse('$api/notes/' + noteID), headers: headers)
+        .then((data) {
+      if (data.statusCode == 200) {
+        final jsonData = json.decode(data.body);
+        return APIResponse<Note>(data: Note.fromJson(jsonData));
+      }
+      return APIResponse<Note>(
+        error: true,
+        errorMessage: 'An error occured',
+      );
+    }).catchError((_) => APIResponse<Note>(
+              error: true,
+              errorMessage: 'An error occured',
+            ));
   }
 }

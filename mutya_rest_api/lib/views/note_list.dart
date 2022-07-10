@@ -76,16 +76,21 @@ class _NoteListState extends State<NoteList> {
                   onDismissed: (direction) {},
                   confirmDismiss: (direction) async {
                     final result = await showDialog(
-                        context: context, builder: (_) => const NoteDelete());
-                    print(result);
+                      context: context,
+                      builder: (_) => const NoteDelete(),
+                    );
+                    //print(result);
                     return result;
                   },
                   background: Container(
                     color: Colors.red,
                     padding: const EdgeInsets.only(left: 16),
                     child: const Align(
-                      child: Icon(Icons.delete, color: Colors.white),
                       alignment: Alignment.centerLeft,
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   child: ListTile(
@@ -95,11 +100,13 @@ class _NoteListState extends State<NoteList> {
                     ),
                     subtitle: Text(
                         'Last edited on ${formatDateTime(_apiResponse.data![index].latestEditDateTime ?? _apiResponse.data![index].createDateTime)}'),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => NoteModify(
-                              noteID: _apiResponse.data![index].noteID)));
-                    },
+                    onTap: () => Navigator.of(context)
+                        .push(MaterialPageRoute(
+                            builder: (_) => NoteModify(
+                                noteID: _apiResponse.data![index].noteID)))
+                        .then((data) {
+                      _fetchNotes();
+                    }),
                   ),
                 );
               },

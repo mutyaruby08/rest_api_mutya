@@ -8,7 +8,7 @@ class NotesService {
   static const headers = {'apiKey': 'ae597580-3729-415e-b5b2-42bf770356e5'};
 
   Future<APIResponse<List<NoteForListing>>> getNotesList() {
-    return http.get(Uri.parse('$api + /notes'), headers: headers).then((data) {
+    return http.get(Uri.parse('$api/notes'), headers: headers).then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
         final notes = <NoteForListing>[];

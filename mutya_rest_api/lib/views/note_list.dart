@@ -79,7 +79,35 @@ class _NoteListState extends State<NoteList> {
                       context: context,
                       builder: (_) => const NoteDelete(),
                     );
-                    //print(result);
+                    if (result) {
+                      final deleteResult = await service
+                          .deleteNote(_apiResponse.data![index].noteID);
+
+                      var message;
+                      if (deleteResult.data! == true) {
+                        message = 'The note was deleted successfully';
+                      } else {
+                        message =
+                            deleteResult.errorMessage ?? 'An error occured';
+                      }
+
+                      showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                                title: const Text('Done'),
+                                content: Text(message),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                      child: const Text('Ok'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      })
+                                ],
+                              ));
+
+                      return deleteResult.data ?? false;
+                    }
+                    // print(result);
                     return result;
                   },
                   background: Container(
